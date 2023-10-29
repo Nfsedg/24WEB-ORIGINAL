@@ -14,12 +14,27 @@ namespace _24CV_WEB.Services.ContractServices
             _repository = new CurriculumRepository(context);
         }
 
-        public ResponseHelper Create(Curriculum model)
+        public async Task<ResponseHelper> Create(Curriculum model)
 		{
 			ResponseHelper responseHelper = new ResponseHelper();
 
 			try
 			{
+				string filePath = "";
+				string fileName = "";
+
+                if (model.Foto != null && model.Foto.Length > 0)
+				{
+					fileName = Path.GetFileName(model.Foto.FileName);
+					filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Fotos", fileName);
+				}
+				model.RutaFoto = fileName;
+
+				//Copia el archivo en un directorio
+				using( var fileStream = new FileStream(filePath, FileMode.Create))
+				{
+					await model.Foto.CopyToAsync(fileStream);
+				}
 				if (_repository.Create(model) > 0)
 				{
 					responseHelper.Success = true;
@@ -46,7 +61,16 @@ namespace _24CV_WEB.Services.ContractServices
 
 		public List<Curriculum> GetAll()
 		{
-			throw new NotImplementedException();
+			try
+			{
+				List<Curriculum> list = new List<Curriculum>();
+				list = _repository.GetAll();
+				return list;
+
+			} catch(Exception e)
+			{
+				throw;
+			}
 		}
 
 		public Curriculum GetById(int id)

@@ -1,5 +1,11 @@
 ﻿@model _24CV_WEB.Models.Curriculum
 
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
 <h1 class="text-center">Editar Currículum</h1>
 
 <div class="row">
@@ -13,6 +19,10 @@
             <div class="form-group">
                 <label asp-for="Apellidos">Apellidos</label>
                 <input asp-for="Apellidos" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Email">Email</label>
+                <input asp-for="Email" class="form-control" />
             </div>
             <div class="form-group">
                 <label asp-for="FechaNacimiento">Fecha de Nacimiento</label>
@@ -29,6 +39,10 @@
             <div class="form-group">
                 <label asp-for="Foto">Foto</label>
                 <input type="file" asp-for="Foto" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Dirección">Dirección</label>
+                <textarea asp-for="Dirección" class="form-control" ></textarea>
             </div>
             <br />
             <button class="btn btn-primary" type="submit">Guardar Cambios</button>

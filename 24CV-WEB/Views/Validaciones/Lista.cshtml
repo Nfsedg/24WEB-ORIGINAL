@@ -13,7 +13,7 @@
 					<th>CURP</th>
 					<th>Ruta Foto</th>
 					<th>Foto</th>
-					<th>Acción</th>
+					<th>Accion</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -31,10 +31,10 @@
 							<img src="~/Fotos/@item.RutaFoto" width="150" height="150" />
 							}
 						</td>
-						<td>
+						<td class="d-flex flex-column gap-2">
 							<a href="@Url.Action("Curriculum", "Validaciones", new { id = item.Id })" class="btn btn-primary">Ver Curriculum</a>
-							<a href="@Url.Action("Eliminar", "Validaciones", new { id = item.Id })" class="btn btn-primary">Eliminar</a>
-							<a href="@Url.Action("IrEditar", "Validaciones", new { id = item.Id })" class="btn btn-primary">Editar</a>
+							<a href="@Url.Action("IrEditar", "Validaciones", new { id = item.Id })" class="btn btn-secondary">Editar</a>
+							<a href="@Url.Action("Eliminar", "Validaciones", new { id = item.Id })" class="btn btn-danger">Eliminar</a>
 						</td>
 					</tr>
 				}

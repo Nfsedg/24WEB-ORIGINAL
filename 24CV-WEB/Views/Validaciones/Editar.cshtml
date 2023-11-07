@@ -1,0 +1,37 @@
+﻿@model _24CV_WEB.Models.Curriculum
+
+<h1 class="text-center">Editar Currículum</h1>
+
+<div class="row">
+    <div class="col-12">
+        <form asp-action="Editar" asp-controller="Validaciones" method="post" enctype="multipart/form-data">
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Nombre">Nombre</label>
+                <input asp-for="Nombre" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Apellidos">Apellidos</label>
+                <input asp-for="Apellidos" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaNacimiento">Fecha de Nacimiento</label>
+                <input asp-for="FechaNacimiento" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="CURP">CURP</label>
+                <input asp-for="CURP" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="RutaFoto">Image Path</label>
+                <input asp-for="RutaFoto" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Foto">Foto</label>
+                <input type="file" asp-for="Foto" class="form-control" />
+            </div>
+            <br />
+            <button class="btn btn-primary" type="submit">Guardar Cambios</button>
+        </form>
+    </div>
+</div>

@@ -7,7 +7,7 @@ namespace _24CV_WEB.Services.Contracts
 		List<Curriculum> GetAll();
 		Curriculum GetById(int id);
 		Task<ResponseHelper> Create(Curriculum model);
-		ResponseHelper Update(Curriculum model);
+		Task<ResponseHelper> Update(Curriculum model);
 		ResponseHelper Delete(int id);
 	}
 }

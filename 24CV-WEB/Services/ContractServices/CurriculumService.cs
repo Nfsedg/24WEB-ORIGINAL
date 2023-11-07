@@ -56,7 +56,35 @@ namespace _24CV_WEB.Services.ContractServices
 
 		public ResponseHelper Delete(int id)
 		{
-			throw new NotImplementedException();
+			ResponseHelper responseHelper = new ResponseHelper();
+
+			try
+			{
+				Curriculum curriculum = _repository.GetById(id);
+
+				if (curriculum != null)
+				{
+					if (_repository.Delete(id) > 0)
+					{
+						responseHelper.Success = true;
+						responseHelper.Message = $"Se eliminó el currículum de {curriculum.Nombre} con éxito.";
+					}
+					else
+					{
+						responseHelper.Message = "Ocurrió un error al eliminar el currículum.";
+					}
+				}
+				else
+				{
+					responseHelper.Message = "El currículum no se encontró en la base de datos.";
+				}
+			}
+			catch (Exception e)
+			{
+				responseHelper.Message = $"Ocurrió un error al eliminar el currículum. Error: {e.Message}";
+			}
+
+			return responseHelper;
 		}
 
 		public List<Curriculum> GetAll()
@@ -75,12 +103,65 @@ namespace _24CV_WEB.Services.ContractServices
 
 		public Curriculum GetById(int id)
 		{
-			throw new NotImplementedException();
+			return _repository.GetById(id);
 		}
 
-		public ResponseHelper Update(Curriculum model)
+		public async Task<ResponseHelper> Update(Curriculum model)
 		{
-			throw new NotImplementedException();
+			ResponseHelper responseHelper = new ResponseHelper();
+
+			try
+			{
+				var existingCurriculum = _repository.GetById(model.Id);
+
+				if (existingCurriculum == null)
+				{
+					responseHelper.Message = "El currículum no fue encontrado.";
+					return responseHelper;
+				}
+
+				string filePath = "";
+				string fileName = "";
+
+				if (model.Foto != null && model.Foto.Length > 0)
+				{
+					fileName = Path.GetFileName(model.Foto.FileName);
+					filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Fotos", fileName);
+					model.RutaFoto = fileName;
+				}
+
+				// Copia el archivo en un directorio
+				using (var fileStream = new FileStream(filePath, FileMode.Create))
+				{
+					await model.Foto.CopyToAsync(fileStream);
+				}
+
+				existingCurriculum.Nombre = model.Nombre;
+				existingCurriculum.Apellidos = model.Apellidos;
+				existingCurriculum.Email = model.Email;
+				existingCurriculum.CURP = model.CURP;
+				existingCurriculum.PorcentajeIngles = model.PorcentajeIngles;
+				existingCurriculum.FechaNacimiento = model.FechaNacimiento;
+				existingCurriculum.Foto = model.Foto;
+				existingCurriculum.RutaFoto = model.RutaFoto;
+				existingCurriculum.Dirección = model.Dirección;
+
+				if (_repository.Update(existingCurriculum) > 0)
+				{
+					responseHelper.Success = true;
+					responseHelper.Message = "Currículum actualizado con éxito.";
+				}
+				else
+				{
+					responseHelper.Message = "Ocurrió un error al actualizar el currículum.";
+				}
+			}
+			catch (Exception e)
+			{
+				responseHelper.Message = $"Ocurrió un error al actualizar el currículum. Error: {e.Message}";
+			}
+
+			return responseHelper;
 		}
 	}
 }

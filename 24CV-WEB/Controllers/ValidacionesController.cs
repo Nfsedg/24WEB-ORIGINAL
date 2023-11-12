@@ -1,11 +1,14 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Data;
+using System.Text.RegularExpressions;
 using _24CV_WEB.Models;
 using _24CV_WEB.Services.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace _24CV_WEB.Controllers
 {
-    public class ValidacionesController : Controller
+	[Authorize(Roles = "Manager")]
+	public class ValidacionesController : Controller
     {
         private readonly ICurriculumService _curriculumService;
 

@@ -1,10 +1,13 @@
 ﻿using _24CV_WEB.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using System.Diagnostics;
 
 namespace _24CV_WEB.Controllers
 {
-    public class HomeController : Controller
+	[Authorize(Roles = "Administrador,Manager")]
+	public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
 
